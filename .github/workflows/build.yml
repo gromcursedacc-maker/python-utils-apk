@@ -10,11 +10,11 @@ jobs:
     
     steps:
     
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       
       - name: Build with Buildozer
       
-        uses: ArtemSBulgakov/buildozer-action@v1
+        uses: digreatbrian/buildozer-action@v2
         
         with:
         
