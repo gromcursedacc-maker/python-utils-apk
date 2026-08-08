@@ -1,45 +1,36 @@
 name: Build APK
 
-on: [push, pull_request]
+on: [push, workflow_dispatch]
 
 jobs:
-
   build:
-  
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-22.04
     steps:
-    
       - uses: actions/checkout@v4
-      
-      - name: Build with Buildozer
-      
-        uses: digreatbrian/buildozer-action@v2
-        
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-        
-          python-version: 3.11
-          
+          python-version: '3.11'
+
+      - name: Install system dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip python3-virtualenv \
+            autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo6 \
+            cmake libffi-dev libssl-dev automake autopoint gettext
+
+      - name: Install Buildozer and Cython
+        run: |
+          python3 -m pip install --upgrade pip setuptools
+          python3 -m pip install buildozer cython==0.29.33
+
+      - name: Build APK
+        run: |
+          buildozer -v android debug
+
       - name: Upload APK
-      
         uses: actions/upload-artifact@v4
-        
         with:
-        
           name: package
-          
           path: bin/*.apk
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
