@@ -14,7 +14,7 @@ jobs:
       
       - name: Build with Buildozer
       
-        uses: ArtemSerebrennikov/buildozer-action@v1
+        uses: ArtemSerebryakov/buildozer-action@v1
         
         with:
         
@@ -22,6 +22,21 @@ jobs:
           
           python_version: 3.11
           
+      - name: Upload APK
+      
+        uses: actions/upload-artifact@v3
+        
+        with:
+        
+          name: package
+          
+          path: bin/*.apk
+          
+
+
+
+
+
 
 
 
